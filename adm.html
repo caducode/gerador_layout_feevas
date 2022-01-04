@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <title>Gerador Material Basico</title>
+		<meta charset="UTF-8">
+        <style>
+            .tudo{
+                min-height: 300px;
+                width: 100%;
+                background-color: lightsteelblue;
+            }
+            .flex{
+                display: flex;
+                padding: 10px;
+            }
+            input{
+                margin: 0 10px;
+            }
+            .feevas_checkbox{
+                margin-right:10px;
+            }
+            .url_txt{
+                margin-right: 10px;
+                
+            }
+            select{
+                margin-right: 10px;
+            }
+            button{
+                margin: 0 10px;
+            }
+            .displayNone, .txt_nome{
+                display: visible;
+                width: 310px; 
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="tudo" id="tudoId">
+           <!-- <section class="flex">
+                <span>Nome do link</span> 
+                <input type="text" />
+                <input type="text" class="feevas_link_material" />
+                
+                <select name="feevas_nm_link" id="feevas_nm_link">
+					<option value ="video">Vídeo</option>
+					<option value="apresentacao">Apresentação</option>
+                    <option value="artigo">Artigo</option>
+                    <option value="revista">Revista</option>
+                    <option value="livro">Livro</option>                    
+                    <option value ="site">Site</option>
+                </select>
+
+                <input type="checkbox" checked class="feevas_checkbox"><span class="url_txt">URL</span>
+                <button  onclick="addNovo()">Adicionar Novo</button>
+                <button  onclick="dellEste(this)">Excluir</button>
+            </section>-->
+            
+        </div>
+        <div class="geraButton">
+            <button onclick="geraLayout()">Gerar layout</button>
+        </div>
+        <div id="result">
+
+
+        </div>
+        <script src="funjs_1p0.js"></script>
+        <script>
+            
+            let tudoDiv = document.getElementById("tudoId");
+            addNovo(); //cria o primeiro
+            
+            function geraLayout(){
+                let sectionsNodes = document.getElementsByTagName("section");
+                console.log(sectionsNodes);
+                let arrayItens = new Array();
+                for(let i = 0; i< sectionsNodes.length; i++){
+                    arrayItens[i]= new Object();
+                    arrayItens[i].nomeItem = sectionsNodes[i].children[1].value;
+                    arrayItens[i].tipoItem  = sectionsNodes[i].children[2].options[sectionsNodes[i].children[2].selectedIndex].value;
+                    arrayItens[i].usaLink =  sectionsNodes[i].children[4].checked
+                    if(sectionsNodes[i].children[4].checked){
+                        arrayItens[i].linkMaterial = sectionsNodes[i].children[3].value;
+                    }
+                }
+                 
+                
+
+               let divRes = document.getElementById("result");
+               divRes.innerText =  geraCode(arrayItens);
+			    
+				copiatexto(divRes.innerText)
+				
+            }  
+
+			function copiatexto(text) {
+				
+			    let area1 = document.createElement('textarea');
+                     //-------------------------
+                    area1.value = text;
+                    document.body.appendChild(area1);
+                    area1.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(area1);
+                    let respo = document.getElementById('result');
+                   // respo.innerHTML = "Link gerado e copiado para a area de transferência";
+                    setTimeout(function(){
+                        respo.innerHTML += "<br/><br/><b>Link gerado e copiado para a area de transferência</b>";
+                    },700);
+            
+			}
+            
+
+        </script>
+    </body>
+</html>
